@@ -60,6 +60,13 @@ public class RearrangeTheArray {
 
 
     //Q2: Rearrange the array in alternating positive and negative items n.of positives != n.of negatives
+    /*
+     *For this Q1 Optimal solution is best solution
+     * We will me maintaining 2 arrays to store positives and negatives
+     * we will iterate over those 2 arrays and store them in correct order in original Array
+     * TC : O(N) + O(N)
+     * SC : O(N)
+     * */
     public static int[] rearrangeTheArrayOptimalQ2(int[] arr){
         List<Integer> positives = new ArrayList<>();
         List<Integer> negatives = new ArrayList<>();
