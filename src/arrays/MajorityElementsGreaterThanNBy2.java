@@ -36,7 +36,7 @@ public class MajorityElementsGreaterThanNBy2 {
     /*
     * Optimal Solution
     * We will be using hasMap to maintain the count of each element
-    * And we will iterate over hashMap to find the element which occured > n/2 times
+    * And we will iterate over hashMap to find the element which occurred > n/2 times
     * */
     public static int majorityElementsGreaterThanNBy2Optimal(int[] arr){
         Map<Integer, Integer> map = new HashMap<>();
@@ -59,7 +59,7 @@ public class MajorityElementsGreaterThanNBy2 {
     * i= 1: element = 1 count = 1;
     * i= 2 : element = 1 count = 0; as soon as the currentElement != element decrease count by 1
     * i= 3: element = 2 count = 1; as the count moved to 0 we will change the element to the next index element
-    * i= 4: element = 2 count = 0;
+    * i= 4: element = 3 count = 0;
     * i=5: element = 2 count =1;
     * i=6: element = 2 count =2;
     * In final whatever the value left in element place  iterate over the array and count number of times it occured
