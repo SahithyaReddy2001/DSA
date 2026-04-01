@@ -1,3 +1,4 @@
+import binarySearch.FindPeakElement2;
 import binarySearch.Search2DMatrix;
 import binarySearch.Search2DMatrix2;
 
@@ -7,19 +8,10 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        int[][] matrix = {{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
-        System.out.println(Search2DMatrix2.searchMatrixBetter(matrix, 18));
-        System.out.println(Search2DMatrix2.searchMatrixBrute(matrix, 18));
-        System.out.println(Search2DMatrix2.searchMatrixOptimised(matrix, 18));
-
-        System.out.println(Search2DMatrix2.searchMatrixOptimised(matrix, 20));
-        System.out.println(Search2DMatrix2.searchMatrixBetter(matrix, 20));
-        System.out.println(Search2DMatrix2.searchMatrixBrute(matrix, 20));
-
-
-        System.out.println(Search2DMatrix2.searchMatrixOptimised(matrix, 5));
-        System.out.println(Search2DMatrix2.searchMatrixBetter(matrix, 5));
-        System.out.println(Search2DMatrix2.searchMatrixBrute(matrix, 5));
+        int[][] matrix = {{70,50,40,30,20},{100,1,2,3,4}};
+        System.out.println(Arrays.toString(FindPeakElement2.findPeakGridBrute(matrix)));
+        System.out.println(Arrays.toString(FindPeakElement2.findPeakGridBetter(matrix)));
+        System.out.println(Arrays.toString(FindPeakElement2.findPeakGridOptimal(matrix)));
 
     }
 }
