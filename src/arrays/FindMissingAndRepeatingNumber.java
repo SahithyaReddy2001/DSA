@@ -84,6 +84,26 @@ public class FindMissingAndRepeatingNumber {
         System.out.println("Repeating : "+ repeating + " Missing: " + missing);
     }
 
+    public static int[] findMissingAndRepeatedValues(int[][] grid) {
+        long length = (long) grid.length * grid.length;
+        long s = (length)*(length+1)/2;
+        long sn = (length*(length+1)*(2*length +1))/6;
+        long s1 = 0;
+        int s1n = 0;
+        for(int i=0; i<grid.length; i++){
+            for(int j=0; j<grid.length; j++){
+                s1 += grid[i][j];
+                s1n += grid[i][j] * grid[i][j];
+            }
+        }
+
+        long temp = (sn-s1n)/(s-s1);
+        int[] arr = new int[2];
+        arr[0] = (int)((s-s1)+temp)/2;
+        arr[1] = (int)(arr[0]-(s-s1));
+        return arr;
+    }
+
 
     //TODO : Optimal 2 using XOR
 

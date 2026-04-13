@@ -5,13 +5,14 @@ import java.util.List;
 public class LinkedListOperations {
     public static LinkedList head = new LinkedList();
 
-    public static void createLinkedList(List<Integer> list){
+    public static LinkedList createLinkedList(List<Integer> list){
         head.setValue(list.getFirst());
         LinkedList temp = head;
         for(int i=1; i<list.size(); i++){
             temp.setNext(new LinkedList(list.get(i), null));
             temp = temp.getNext();
         }
+        return head;
     }
 
     public static void printLinkedList(){
