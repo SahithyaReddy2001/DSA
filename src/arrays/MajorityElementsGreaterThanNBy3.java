@@ -61,9 +61,9 @@ public class MajorityElementsGreaterThanNBy3 {
     */
     public static List<Integer> majorityElementsGreaterThanNBy3Optimal(int[] arr){
         List<Integer> l = new ArrayList<>();
-        int element1 = 0;
+        int element1 = Integer.MIN_VALUE;
         int count1 = 0;
-        int element2 = 0;
+        int element2 = Integer.MIN_VALUE;
         int count2 = 0;
         for(int i=0; i<arr.length; i++){
             if(count1 == 0 && arr[i] != element2){

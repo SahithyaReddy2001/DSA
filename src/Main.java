@@ -1,7 +1,4 @@
-import arrays.FindMissingAndRepeatingNumber;
-import arrays.LeftRotateArrayByDElements;
-import arrays.MajorityElementsGreaterThanNBy2;
-import arrays.RemoveDuplicatesFromSortedArray;
+import arrays.*;
 import binarySearch.*;
 import doublyLinkedList.BasicOperations;
 import doublyLinkedList.DoublyLinkedList;
