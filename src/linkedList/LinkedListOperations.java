@@ -6,6 +6,7 @@ public class LinkedListOperations {
     public static LinkedList head = new LinkedList();
 
     public static LinkedList createLinkedList(List<Integer> list){
+        LinkedList head = new LinkedList();
         head.setValue(list.getFirst());
         LinkedList temp = head;
         for(int i=1; i<list.size(); i++){

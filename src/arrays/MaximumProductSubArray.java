@@ -36,10 +36,10 @@ public class MaximumProductSubArray {
         int fronSum = 1;
         int backSum = 1;
         for(int i=0; i<arr.length; i++){
-            fronSum *= arr[i];
-            backSum *= arr[arr.length-i-1];
             if(fronSum == 0) fronSum=1;
             if(backSum == 0) backSum=1;
+            fronSum *= arr[i];
+            backSum *= arr[arr.length-i-1];
             finProd = Math.max(finProd, Math.max(fronSum, backSum));
         }
         return finProd;
