@@ -1,6 +1,7 @@
 import arrays.*;
 import binarySearch.*;
 import doublyLinkedList.BasicOperations;
+import doublyLinkedList.DeleteAllOccurrences;
 import doublyLinkedList.DoublyLinkedList;
 import linkedList.*;
 import sorting.MergeSort;
@@ -12,8 +13,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        LinkedList list = LinkedListOperations.createLinkedList(Arrays.asList(2,4,3));
-        LinkedList list1 = LinkedListOperations.createLinkedList(Arrays.asList(5,6,4));
-        AddTwoNumbers.addTwoNumbers(list, list1);
+        LinkedList list = LinkedListOperations.createLinkedList(Arrays.asList(1,2,3,4,5));
+        RotateLLByKEle.rotateRight(list, 2);
     }
 }

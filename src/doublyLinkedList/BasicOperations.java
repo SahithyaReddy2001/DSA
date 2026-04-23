@@ -6,7 +6,7 @@ public class BasicOperations {
     public static DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
 
 
-    public static void createDoublyLinkedList(List<Integer> list){
+    public static DoublyLinkedList createDoublyLinkedList(List<Integer> list){
         doublyLinkedList = new DoublyLinkedList(list.getFirst());
         DoublyLinkedList temp = doublyLinkedList;
         for(int i=1; i<list.size(); i++){
@@ -15,6 +15,7 @@ public class BasicOperations {
             doublyLinkedList1.previous = temp;
             temp = doublyLinkedList1;
         }
+        return doublyLinkedList;
     }
 
     public static void insertNodeAtHead(Integer value){
