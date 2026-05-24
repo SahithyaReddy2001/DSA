@@ -74,5 +74,4 @@ public class KthMissingPositiveInteger {
         int temp = arr[high] - 1- high;
         return arr[high] + (k-temp);
     }
-
 }

@@ -42,7 +42,7 @@ public class SingleElementInSortedArray {
     // If we observe care fully if we observe all the elements before single element they are (odd, even)
     // after single element they are (even, odd)
     //TC: O(log n)
-    public int singleNonDuplicateOptimal(int[] arr) {
+    public static int singleNonDuplicateOptimal(int[] arr) {
         if(arr.length == 1 || arr[0] != arr[1]) return arr[0];
         if(arr[arr.length-2] != arr[arr.length-1]) return arr[arr.length-1];
         int low = 1;

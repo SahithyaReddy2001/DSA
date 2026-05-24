@@ -3,7 +3,6 @@ package linkedList;
 import java.util.List;
 
 public class LinkedListOperations {
-    public static LinkedList head = new LinkedList();
 
     public static LinkedList createLinkedList(List<Integer> list){
         LinkedList head = new LinkedList();
@@ -16,7 +15,7 @@ public class LinkedListOperations {
         return head;
     }
 
-    public static void printLinkedList(){
+    public static void printLinkedList(LinkedList head){
         LinkedList temp = head;
         while(temp != null){
             System.out.print(temp.getValue() + " ");
@@ -25,7 +24,7 @@ public class LinkedListOperations {
         System.out.println();
     }
 
-    public static void findLength(){
+    public static void findLength(LinkedList head){
         LinkedList temp = head;
         int count = 0;
         while(temp!=null){
@@ -35,7 +34,7 @@ public class LinkedListOperations {
         System.out.println(count);
     }
 
-    public static void search(int i){
+    public static void search(int i, LinkedList head){
         LinkedList temp = head;
         while (temp!=null){
             if(temp.getValue() == i){
@@ -48,11 +47,11 @@ public class LinkedListOperations {
 
     }
 
-    public static void insertAtStart(int i){
+    public static void insertAtStart(int i, LinkedList head){
         head = new LinkedList(i, head);
     }
 
-    public static void insertAtLast(int i){
+    public static void insertAtLast(int i, LinkedList head){
         LinkedList temp = head;
         LinkedList temp2 = temp;
         while(temp != null){
@@ -63,6 +62,25 @@ public class LinkedListOperations {
         }
         LinkedList l = new LinkedList(i, null);
         temp2.setNext(l);
+    }
+
+    public static int getLastElement(LinkedList list){
+        LinkedList temp = list;
+        while(temp.next != null){
+            temp = temp.next;
+        }
+        return temp.value;
+    }
+
+    public static int deleteLast(LinkedList list){
+        LinkedList temp = list;
+        LinkedList prev = null;
+        while(temp.next != null){
+            prev = temp;
+            temp = temp.next;
+        }
+        if(null != prev) prev.next = null;
+        return  temp.value;
     }
 
 }

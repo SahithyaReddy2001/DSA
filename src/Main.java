@@ -1,19 +1,23 @@
-import arrays.*;
-import binarySearch.*;
-import doublyLinkedList.BasicOperations;
-import doublyLinkedList.DeleteAllOccurrences;
-import doublyLinkedList.DoublyLinkedList;
-import linkedList.*;
-import recursion.Atoi;
-import sorting.MergeSort;
+import linkedList.LinkedListOperations;
+import linkedList.ReverseLinkedList;
+import linkedList.StartingPointInLL;
+import stack.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(MinimiseMaxDistanceBetweenGasStations.minimiseMaxDistance(new int[]{1, 13, 17, 23}, 5));
+        System.out.println(RemoveKDigits.removeKdigits("10200",1));
+    }
+    public static int countKthRoots(int l, int r, int k) {
+        int count =0;
+        for(int i=0; i<=r/k; i++){
+            int product =1;
+            for(int j=0; j<k; j++){
+                product *= i;
+            }
+            if(product >= l && product<=r) count++;
+        }
+        return count;
     }
 }

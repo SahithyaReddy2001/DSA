@@ -59,7 +59,7 @@ public class StartingPointInLL {
     //Step 2: Once cycle fount place slow pointer at head and fast let it be where it is
     //        Now move slow by 1 and fast by 1
     //        once slow == fast that's the starting point
-    public LinkedList detectCycle(LinkedList head) {
+    public static LinkedList detectCycle(LinkedList head) {
         LinkedList slow = head;
         LinkedList fast = head;
         boolean isLoop = false;

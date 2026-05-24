@@ -8,6 +8,7 @@ public class FirstAndLastOccurrence {
          If target is not found in the array, return [-1, -1].
          You must write an algorithm with O(log n) runtime complexity.
      */
+    //TODO: Check recursion solution
     public static int[] searchRange(int[] arr, int target, int[] ansArr, int start, int end){
         if(start > end) return ansArr;
         int mid = start + ((end-start)/2);

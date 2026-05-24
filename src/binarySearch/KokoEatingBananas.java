@@ -25,9 +25,7 @@ public class KokoEatingBananas {
     public static int getHours(int[] piles, int b){
         int hours = 0;
         for(int i: piles){
-            if(i<=b) hours++;
-            else if(i%b != 0) hours += (i/b)+1;
-            else if(i%b == 0) hours += i/b;
+            hours += Math.ceil((double)i/(double)b);
         }
         return hours;
     }
