@@ -8,7 +8,7 @@ public class NextPermutation {
     *         In above example the breakpoint is 8,10
     * step 2: find the greatest element than 8 but which is near to it and swap them
     *          3,4,5,9,10,8,6,4
-    * step 3: Reverse the elements from 10 to 6
+    * step 3: Reverse the elements from 10 to 4
     * So the next permutation will be 3,4,5,9,4,6,8,10
     *
     * TC: O(3N)

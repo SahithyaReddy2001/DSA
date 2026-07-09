@@ -29,21 +29,4 @@ public class NumberOfGreaterElementsToTheRight {
         return ansArr;
     }
 
-
-    /*
-    * TC:O(N)
-    * SC: O(2N)
-    * */
-    public static int[] findTotalNumberOFGreaterElementsToTheRightOptimal(int[] arr){
-        int[] ansArr = new int[arr.length];
-        java.util.Stack<Integer> stack = new Stack<>();
-        for (int i = arr.length - 1; i >= 0; i--) {
-            while (!stack.isEmpty() && stack.peek()<= arr[i]) {
-                stack.pop();
-            }
-            if (!stack.isEmpty()) ansArr[i] = stack.size();
-            stack.push(arr[i]);
-        }
-        return ansArr;
-    }
 }

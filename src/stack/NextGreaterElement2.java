@@ -22,6 +22,18 @@ public class NextGreaterElement2 {
     -109 <= nums[i] <= 109*/
 
 
+    /*
+    * BruteForce:
+    * eg:
+    * 0 1 2 3 4 5 6 7 8 9
+    * 2 7 9 1 8 2 7 9 1 8
+    * ---------|
+    * the underlined array is main array and after that is repeated array
+    * so for every i=0 to length
+    * i can check from j = i+1 to i+length for every out of index i will do % with length
+    * SC: O(1)
+    * TC: 0(N^2)
+    * */
     public static int[] nextGreaterElements(int[] nums) {
         int[] ans = new int[nums.length];
         Arrays.fill(ans, -1);
@@ -40,13 +52,31 @@ public class NextGreaterElement2 {
 
     /*
     * Optimal Solution:
-    *
+    * first for every element from last to 0 we will insert them into stack based on next greater element
+    * then again we will iterate them from end now we will follow next greater element concept and we will store them in solution
+    * TC: O(2N)
+    * SC: O(1)
     *
     * */
     public static int[] nextGreaterElementsOptimal(int[] nums) {
         int[] ans = new int[nums.length];
         Arrays.fill(ans, -1);
         Stack<Integer> stack = new Stack<>();
+
+        /*for(int i = nums.length-1; i>=0; i--){
+            while(!stack.isEmpty() && stack.peek() <= nums[i]){
+                stack.pop();
+            }
+            stack.push(nums[i]);
+        }
+        for(int i = nums.length-1; i>=0; i--){
+            while(!stack.isEmpty() && stack.peek() <= nums[i]){
+                stack.pop();
+            }
+            if(!stack.isEmpty()) ans[i] = stack.peek();
+            stack.push(nums[i]);
+        }*/
+
         for(int i=nums.length*2 -1; i>=0; i--){
             int index = i%nums.length;
             while(!stack.isEmpty() && stack.peek() <= nums[index]){
