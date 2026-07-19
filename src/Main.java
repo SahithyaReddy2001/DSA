@@ -1,20 +1,48 @@
+import recursion.PowXN;
+import recursion.ReverseAStack;
+import recursion.SortStackUsingRecursion;
+
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        Stack<Integer> st = new Stack<>();
+        st.push(4);
+        st.push(1);
+        st.push(3);
+        st.push(2);
 
-        String EffectiveDate = Instant.ofEpochMilli(1782372317029l)
-                .atZone(ZoneId.systemDefault())
-                .format(DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
+        // Reverse the stack
+        SortStackUsingRecursion.sortStack(st);
     }
 
+    public static int countGoodNumbers(long n) {
+        long MOD = 1_000_000_007;
+        boolean isOdd = n%2 != 0;
+        long odd = n/2;
+        long even = isOdd ? odd+1 : odd;
+        odd = myPowOptimal(4, odd, MOD);
+        even = myPowOptimal(5, even, MOD);
+        return (int) ((odd * even) % MOD);
 
+    }
+
+    public static long myPowOptimal(long x, long n, long mod) {
+        long val = 1;
+        x = x%mod;
+        long tempN = n;
+        while(tempN > 0){
+            if(tempN % 2 != 0){
+                val = (val*x)%mod;
+            }
+            x = (x*x)%mod;
+            tempN /=2;
+        }
+        return val;
+    }
     public static int mergeSort(int[] nums, int start, int end, int count){
         if(start == end) return count;
         int mid = (start+end)/2;
