@@ -49,10 +49,23 @@ public class CountAllSubsequencesWithSumK {
 
 
     public static List<List<Integer>> printSubSequencesWithSumK(List<Integer> arr, int k){
-        return recPrint(0, arr, new ArrayList<>(), new ArrayList<>(), 0, k);
+        return recPrint(0, arr, new ArrayList<>(), new ArrayList<>(), k);
     }
 
-    public static List<List<Integer>> recPrint(int index, List<Integer> arr, List<Integer> currentList, List<List<Integer>> finList, int sum, int k){
+    public static List<List<Integer>> recPrint(int index, List<Integer> arr, List<Integer> currentList, List<List<Integer>> finList, int k){
+        if(k == 0){
+            finList.add(new ArrayList<>(currentList));
+            return finList;
+        }else if(k<0 || index>= arr.size()){
+            return finList;
+        }
+        currentList.add(arr.get(index));
+        recPrint(index+1, arr, currentList, finList, k-arr.get(index));
+        currentList.removeLast();
+        recPrint(index+1, arr, currentList, finList, k);
+        return finList;
+    }
+    /*public static List<List<Integer>> recPrint(int index, List<Integer> arr, List<Integer> currentList, List<List<Integer>> finList, int sum, int k){
         if(sum == k){
             finList.add(new ArrayList<>(currentList));
             return finList;
@@ -66,7 +79,7 @@ public class CountAllSubsequencesWithSumK {
         currentList.removeLast();
         recPrint(index+1, arr, currentList, finList, sum, k);
         return finList;
-    }
+    }*/
 
     /*
     * Problem Statement: Given an array nums and an integer k. Return true if there exist subsequences such that the sum of all elements in subsequences is equal to k else false.

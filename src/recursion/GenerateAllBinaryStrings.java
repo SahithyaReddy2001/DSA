@@ -26,4 +26,16 @@ public class GenerateAllBinaryStrings {
         generateRec(n, s+"1", ansList);
         return ansList;
     }
+
+
+    public static List<String> generateRecTemp(int n, String s, List<String> ansList) {
+        if (n <= 0) {
+            ansList.add(s);
+            return ansList;
+        }
+        generateRecTemp(n-1, s+"0", ansList);
+        if(s.isEmpty() || s.charAt(s.length()-1) != '1')
+            generateRecTemp(n-1, s+"1", ansList);
+        return ansList;
+    }
 }

@@ -14,14 +14,13 @@ public class PrintAllSubSequencesOfString {
     Explanation: Given string has 3 subsequences.
      * */
 
-    public static int count = 1;
 
+    //TODO: Need to do it in Bit Manipulation way as well
     public static List<String> print(String s){
         return printAllSubSequence(s, new ArrayList<>(), "");
     }
 
     public static List<String> printAllSubSequence(String s, List<String> finList, String ans){
-        System.out.println(count++);
         if(s.isEmpty()){
             finList.add(ans);
             return finList;
