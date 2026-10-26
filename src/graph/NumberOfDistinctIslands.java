@@ -30,7 +30,7 @@ public class NumberOfDistinctIslands {
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
                 if(grid[i][j] == 'L' && visited[i][j] == 0){
-                    set.add(dfs(grid, visited, i, j, new ArrayList(), i, j));
+                    set.add(dfs(grid, visited, i, j, new ArrayList<>(), i, j));
                 }
             }
         }
@@ -53,5 +53,61 @@ public class NumberOfDistinctIslands {
             }
         }
         return temp;
+    }
+
+
+    /*
+    * TC: O(MN) + O(4MN) = O(MN)
+    - Traversing the grid to find unvisited land cells: O(M*N).
+    - BFS visits each land cell at most once, checking four neighbors per cell: O(4MN).
+    - Storing and hashing the relative coordinates of all islands takes O(M*N) expected time overall.
+    Space Complexity:
+
+    SC: O(MN) + O(MN) + O(MN) = O(MN)
+    - visited matrix: O(M*N).
+    - BFS queue: O(M*N) in the worst case.
+    - set storing distinct island shapes and their coordinate lists: O(M*N) in the worst case.
+    */
+    public int countDistinctIslandsBFS(char[][] grid) {
+        Set<List<List<Integer>>> set = new HashSet<>();
+        int m= grid.length;
+        int n = grid[0].length;
+        int[][] visited = new int[m][n];
+
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(grid[i][j] == 'L' && visited[i][j] == 0){
+                    bfs(grid, visited, i, j, set);
+                }
+            }
+        }
+
+
+
+        return set.size();
+    }
+
+    public void bfs(char[][] grid, int[][] visited, int row, int col, Set<List<List<Integer>>> set){
+        List<List<Integer>> list = new ArrayList<>();
+        Queue<List<Integer>> queue = new ArrayDeque<>();
+        visited[row][col] = 1;
+        queue.add(Arrays.asList(row,col));
+        list.add(Arrays.asList(0, 0));
+
+        while(!queue.isEmpty()){
+            List<Integer> temp = queue.poll();
+            int[] delRow = {-1,0,1,0};
+            int[] delCol = {0,-1,0,1};
+            for(int i=0; i<4; i++){
+                int cr = temp.get(0) + delRow[i];
+                int cc = temp.get(1) + delCol[i];
+                if(cr >=0 && cr<grid.length && cc >=0 && cc<grid[0].length && grid[cr][cc] == 'L' && visited[cr][cc] == 0){
+                    queue.add(Arrays.asList(cr, cc));
+                    visited[cr][cc] =1;
+                    list.add(Arrays.asList(cr-row, cc-col));
+                }
+            }
+        }
+        set.add(list);
     }
 }

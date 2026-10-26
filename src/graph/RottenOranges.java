@@ -36,53 +36,71 @@ public class RottenOranges {
         grid[i][j] is 0, 1, or 2.
     */
 
-    //TC: O(N*M)
-    //SC: O(N*M)
+    /*
+    * Approach
+        1. Traverse the grid:
+           - Count fresh oranges (1).
+           - Add all initially rotten oranges (2) to the queue with time 0.
+        2. Handle edge cases:
+           - If there are no rotten oranges but fresh oranges exist, return -1.
+           - If there are no fresh oranges, return 0.
+        3. Perform multi-source BFS:
+           - Remove a cell from the queue and extract its row, column, and time.
+           - Update max with the maximum time seen so far.
+           - Check its 4 neighbors: up, left, down, right.
+           - If a neighbor is in bounds and contains a fresh orange (1), mark it rotten (2), decrement the fresh-orange count, and enqueue it with time + 1.
+        4. After BFS:
+           - If fresh oranges remain (count > 0), return -1.
+           - Otherwise, return max, the total minutes required.
+        TC: O(M * N) — initial traversal + BFS.
+        SC: O(M * N) — queue in the worst case.
+    * */
     public static int orangesRotting(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
-        int maxMin = 0;
 
-        boolean isRotten = false;
-        int[][] visited = new int[m][n];
-        Queue<List<Integer>> queue = new ArrayDeque<>();
-        int fresh = 0;
+        Queue<int[]> queue = new ArrayDeque<>();
+        int count = 0;
+        int count2 = 0;
+        int max = -1;
 
-        for(int i =0; i<m; i++){
+        for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
                 if(grid[i][j] == 1){
-                    fresh++;
-                }else if(grid[i][j] == 2){
-                    isRotten = true;
-                    queue.add(Arrays.asList(i,j,0));
-                    visited[i][j] = 2;
+                    count++;
+                }
+                if(grid[i][j] == 2){
+                    count2++;
+                    queue.add(new int[]{i,j,0});
                 }
             }
         }
-        if(fresh == 0) return maxMin;
-        if(!isRotten) return -1;
+
+        if(count2 == 0 && count >0) return -1;
+        if(count == 0) return 0;
 
         int[] delRow = {-1,0,1,0};
         int[] delCol = {0,-1,0,1};
+
         while(!queue.isEmpty()){
-            List<Integer> list = queue.poll();
-            int dRow = list.get(0);
-            int dCol = list.get(1);
+            int[] arr = queue.poll();
+            int row = arr[0];
+            int col = arr[1];
+            int time = arr[2];
+            max = Math.max(max, time);
+
             for(int i=0; i<4; i++){
-                int nRow = dRow + delRow[i];
-                int nCol = dCol + delCol[i];
-                if(nRow >= 0 && nRow < m && nCol >= 0 && nCol < n && visited[nRow][nCol] == 0 && grid[nRow][nCol] == 1){
-                    visited[nRow][nCol] = 2;
-                    int t = list.get(2)+1;
-                    queue.add(Arrays.asList(nRow,nCol,t));
-                    maxMin = Math.max(maxMin, t);
-                    fresh--;
+                int r = row+delRow[i];
+                int c = col+delCol[i];
+                if(r>=0 && r<m && c>=0 && c<n && grid[r][c] == 1){
+                    queue.add(new int[]{r,c, time+1});
+                    grid[r][c] = 2;
+                    count--;
                 }
             }
         }
 
-        if(fresh != 0) return -1;
-
-        return maxMin;
+        if(count >0) return -1;
+        return max;
     }
 }

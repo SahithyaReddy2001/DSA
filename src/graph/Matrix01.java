@@ -26,44 +26,72 @@ public class Matrix01 {
     mat[i][j] is either 0 or 1.
     There is at least one 0 in mat.
     */
-    //SC: O(N*M) + O(N*M) + O(N*M)
-    //TC: O(N*M) + O(N*M*4)
-    public static int[][] updateMatrix(int[][] mat) {
-        int m = mat.length;
-        int n = mat[0].length;
-        int[][] distance = new int[m][n];
-        int[][] visited = new int[m][n];
-        Queue<List<Integer>> queue = new ArrayDeque<>();
-        for(int i =0; i<m; i++){
-            for(int j =0; j<n; j++){
-                if(mat[i][j] == 0){
-                    queue.add(Arrays.asList(i,j,0));
-                    visited[i][j] = 1;
-                }
-            }
-        }
-        bfs(mat, distance, visited, queue);
-        return distance;
-    }
 
-    public static void bfs(int[][] mat, int[][] distance, int[][] visited, Queue<List<Integer>> queue){
-        while(!queue.isEmpty()){
-            List<Integer> list = queue.poll();
-            int row = list.get(0);
-            int col = list.get(1);
-            int dist = list.get(2);
-            int[] delRow = {-1, 0, 1, 0};
-            int[] delCol = {0, -1, 0, 1};
-            for(int i=0; i<4; i++){
-                int r = row + delRow[i];
-                int c = col + delCol[i];
-                if(r >=0 && r<mat.length && c>=0 && c<mat[0].length && visited[r][c] == 0 && mat[r][c] == 1){
-                    queue.add(Arrays.asList(r,c,dist+1));
-                    visited[r][c] = 1;
-                    distance[r][c] = dist+1;
+
+    /*
+    * Approach: Multi-Source BFS
+        1. Create a distance matrix dis.
+        2. Traverse the input matrix:
+           - If the cell is 0, add its coordinates and distance 0 to the queue.
+           - If the cell is 1, initialize its distance to -1 to indicate that it is unvisited.
+        3. Process the queue using BFS.
+        4. For each cell, explore its four neighbors: up, left, down, right.
+        5. If a neighbor is within bounds, contains 1, and has distance -1:
+           - Set its distance to currentDistance + 1.
+           - Add it to the queue with its updated distance.
+        6. Return dis.
+
+        Time Complexity: O(M * N)
+        - Initial traversal to identify all 0 cells: O(M * N).
+        - BFS processes each cell at most once because you set dis[r][c] = distance + 1 when adding it to the queue.
+        - Each cell checks four neighbors: O(4 * M * N).
+        Therefore, total TC is O(M * N) + O(4 * M * N) = O(M * N).
+
+        Space Complexity: O(M * N)
+        - dis: O(M * N).
+        - queue: O(M * N) in the worst case.
+        Therefore, total SC is O(M * N) + O(M * N) = O(M * N).
+        */
+
+    public int[][] updateMatrix(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][] dis = new int[m][n];
+
+        Queue<int[]> queue = new ArrayDeque<>();
+
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(grid[i][j] == 0){
+                    queue.add(new int[]{i,j,0});
+                }
+                if(grid[i][j] == 1){
+                    dis[i][j] = -1;
                 }
             }
         }
+
+
+        int[] delRow = {-1,0,1,0};
+        int[] delCol = {0,-1,0,1};
+
+        while(!queue.isEmpty()){
+            int[] arr = queue.poll();
+            int row = arr[0];
+            int col = arr[1];
+            int distance = arr[2];
+
+            for(int i=0; i<4; i++){
+                int r = row+delRow[i];
+                int c = col+delCol[i];
+                if(r>=0 && r<m && c>=0 && c<n && grid[r][c] == 1 && dis[r][c] == -1){
+                    queue.add(new int[]{r,c, distance+1});
+                    dis[r][c] = distance+1;
+                }
+            }
+        }
+
+        return dis;
     }
 
 

@@ -1,5 +1,10 @@
 package graph;
 
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Queue;
+
 public class FloodFill {
     /*
         You are given an image represented by an m x n grid of integers image, where image[i][j] represents the pixel value of the image. You are also given three integers sr, sc, and color. Your task is to perform a flood fill on the image starting from the pixel image[sr][sc].
@@ -33,33 +38,112 @@ public class FloodFill {
         0 <= sr < m
         0 <= sc < n
     */
-    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
-        if(image[sr][sc] != color) {
-            int icolor = image[sr][sc];
-            int[][] visited = new int[image.length][image[0].length];
-            dfs(image, visited, icolor, sr, sc, color);
-        }
+
+    /*
+    * Approach: DFS (Depth-First Search)
+        1. Store the original color of the starting pixel image[sr][sc].
+        2. If originalColor == color, return the image because no changes are needed.
+        3. Create a visited array of size \(M \times N\).
+        4. Call DFS from the starting pixel (sr, sc).
+        5. In DFS:
+           - Mark the current pixel as visited.
+           - Change its color to the new color.
+           - Explore all 4 directions: up, left, down, right.
+           - If a neighbor is within bounds, unvisited, and has the original color, recursively call DFS on it.
+        6. Return the modified image.
+        Time Complexity (TC)
+        O(M*N)
+        - In the worst case, all pixels have the same original color.
+        - Each pixel is visited at most once.
+        - For each pixel, we check 4 neighbors, which takes constant time.
+        Therefore, O(4MN) = O(MN).
+
+        * Space Complexity (SC)
+        O(MN) + O(MN) = O(MN)
+
+        Component	Complexity
+        visited array	O(MN)
+        DFS recursion stack (worst case)	O(MN)
+        Total auxiliary space	O(MN)
+    * */
+    public static int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        int iColor = image[sr][sc];
+        if(iColor == color) return image;
+        int m = image.length;
+        int n = image[0].length;
+
+        int[][] visited = new int[m][n];
+        dfs(image, visited, sr, sc, color, iColor);
         return image;
     }
 
-    public void dfs(int[][] grid, int[][] visitedArr, int icolor, int start, int end, int color){
-        visitedArr[start][end] = 1;
-        grid[start][end] = color;
-        if(start > 0 && visitedArr[start-1][end] == 0 && grid[start-1][end] == icolor){
-            visitedArr[start-1][end] = 1;
-            dfs(grid, visitedArr, icolor, start-1, end, color);
+
+    public static void dfs(int[][] image, int[][] visited, int sr, int sc, int color, int iColor){
+        visited[sr][sc] = 1;
+        image[sr][sc] = color;
+        int[] delRow = {-1,0,1,0};
+        int[] delCol = {0,-1,0,1};
+        for(int i=0; i<4; i++){
+            int row = sr + delRow[i];
+            int col = sc + delCol[i];
+            if(row>=0 && row<image.length && col>=0 && col<image[0].length && visited[row][col] == 0 && image[row][col] == iColor){
+                dfs(image, visited, row, col, color, iColor);
+            }
         }
-        if(start < grid.length-1 && visitedArr[start+1][end] == 0 && grid[start+1][end] == icolor){
-            visitedArr[start+1][end] = 1;
-            dfs(grid, visitedArr, icolor, start+1, end, color);
+    }
+
+
+    /*Approach: BFS (Breadth-First Search)
+        1. Store the original color of the starting pixel image[sr][sc].
+        2. If originalColor == color, return the image because no changes are needed.
+        3. Create a visited array of size M * N.
+        4. Create a queue and add the starting pixel (sr, sc). Mark it as visited immediately.
+        5. While the queue is not empty:
+           - Remove a pixel (row, col) from the queue.
+           - Change its color to the target color.
+           - Explore its 4 neighbors: up, left, down, right.
+           - If a neighbor is within bounds, unvisited, and has the original color, mark it as visited and add it to the queue.
+        6. Return the modified image.
+        Time Complexity (TC)
+        O(M * N)
+        - Each pixel is added to the queue at most once.
+        - For each pixel, we check 4 neighbors, taking O(4) time.
+        - Total: O(4 * M * N) = O(M * N).
+        Space Complexity (SC)
+        O(M * N) + O(M * N) = O(M * N)
+        - Visited array: O(M * N)
+        - BFS queue (worst case): O(M * N)
+        - Total auxiliary space: O(M * N)
+        */
+    public static int[][] floodFillBFS(int[][] image, int sr, int sc, int color) {
+        int iColor = image[sr][sc];
+        if(iColor == color) return image;
+        int m = image.length;
+        int n = image[0].length;
+
+        int[][] visited = new int[m][n];
+        Queue<List<Integer>> queue = new ArrayDeque<>();
+        queue.add(Arrays.asList(sr,sc));
+        visited[sr][sc] = 1;
+
+        while(!queue.isEmpty()){
+            List<Integer> l = queue.poll();
+            int row = l.get(0);
+            int col = l.get(1);
+            image[row][col] = color;
+
+            int[] delRow = {-1,0,1,0};
+            int[] delCol = {0,-1,0,1};
+            for(int i=0; i<4; i++){
+                int r = row + delRow[i];
+                int c = col + delCol[i];
+                if(r>=0 && r<image.length && c>=0 && c<image[0].length && visited[r][c] == 0 && image[r][c] == iColor){
+                    visited[r][c] = 1;
+                    queue.add(Arrays.asList(r,c));
+                }
+            }
+
         }
-        if(end > 0 && visitedArr[start][end-1] == 0 && grid[start][end-1] == icolor){
-            visitedArr[start][end-1] = 1;
-            dfs(grid, visitedArr, icolor, start, end-1, color);
-        }
-        if(end < grid[0].length-1 && visitedArr[start][end+1] == 0 && grid[start][end+1] == icolor){
-            visitedArr[start][end+1] = 1;
-            dfs(grid, visitedArr, icolor, start, end+1, color);
-        }
+        return image;
     }
 }

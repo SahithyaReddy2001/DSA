@@ -1,5 +1,8 @@
 package graph;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 public class SurroundedRegions {
     /*
         You are given an m x n matrix board containing letters 'X' and 'O', capture regions that are surrounded:
@@ -26,37 +29,45 @@ public class SurroundedRegions {
         1 <= m, n <= 200
         board[i][j] is 'X' or 'O'.
       */
-    public static void solve(char[][] board) {
+
+
+    /*
+    * Approach: Boundary DFS
+    * 1. Create a visited matrix to track cells that have been visited.
+        2. Traverse the boundary cells of the board.
+        3. Whenever a boundary cell contains 'O' and is unvisited, call DFS.
+        4. In DFS:
+           - Mark the current cell as visited.
+           - Explore its four adjacent cells: up, left, down, right.
+           - Continue DFS for valid, unvisited neighboring cells containing 'O'.
+        5. Traverse the entire board again:
+           - If a cell contains 'O' and is unvisited, convert it to 'X'.
+           - Keep visited 'O' cells unchanged because they are connected to the boundary.
+        Why does this work?
+
+        Any 'O' connected to a boundary 'O' cannot be surrounded, so it must remain unchanged. All other 'O' cells are surrounded by 'X' and must be converted.
+        3. Complexity comments for your code
+        TC: O(M*N) + O(4*M*N) + O(M*N) = O(M*N)
+
+        SC: O(M*N) + O(M*N) = O(M*N)
+        * */
+
+
+    public void solve(char[][] board) {
         int m = board.length;
         int n = board[0].length;
         int[][] visited = new int[m][n];
+
         for(int i=0; i<m; i++){
-            int j = 0;
-            if(board[i][j] == 'O' && visited[i][j] == 0){
-                dfs(board,visited,i,j);
-            }
-        }
-        for(int i=0; i<m; i++){
-            int j = n-1;
-            if(board[i][j] == 'O' && visited[i][j] == 0){
-                dfs(board,visited,i,j);
-            }
-        }
-        for(int j=0; j<n; j++){
-            int i = 0;
-            if(board[i][j] == 'O' && visited[i][j] == 0){
-                dfs(board,visited,i,j);
-            }
-        }
-        for(int j=0; j<n; j++){
-            int i = m-1;
-            if(board[i][j] == 'O' && visited[i][j] == 0){
-                dfs(board,visited,i,j);
+            for(int j=0; j<n; j++){
+                if((i==0 || i== m-1 || j == 0 || j== n-1) && board[i][j] == 'O' && visited[i][j] == 0){
+                    dfs(board, visited, i, j, m, n);
+                }
             }
         }
 
-        for(int i=1; i<m-1; i++){
-            for(int j=1; j<n-1; j++){
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
                 if(board[i][j] == 'O' && visited[i][j] == 0){
                     board[i][j] = 'X';
                 }
@@ -65,16 +76,79 @@ public class SurroundedRegions {
 
     }
 
-    public static void dfs(char[][] board, int[][] visited, int row, int col){
+    public void dfs(char[][] board, int[][] visited, int row, int col, int m, int n){
         visited[row][col] = 1;
         int[] delRow = {-1,0,1,0};
         int[] delCol = {0,-1,0,1};
         for(int i=0; i<4; i++){
-            int r = row+delRow[i];
-            int c = col+delCol[i];
-            if(r>=0 && r<board.length && c>=0 && c<board[0].length && visited[r][c] == 0 && board[r][c] == 'O'){
-                dfs(board, visited, r, c);
+            int r = row + delRow[i];
+            int c = col + delCol[i];
+            if(r>=0 && r<m && c>=0 && c< n && board[r][c] == 'O' && visited[r][c] == 0){
+                dfs(board, visited, r, c, m, n);
             }
         }
+    }
+
+
+
+    /*Approach: Boundary BFS
+    1. Create a visited matrix and a queue.
+    2. Traverse the board and find all boundary cells containing 'O'.
+    3. Mark each such cell as visited and add it to the queue.
+    4. While the queue is not empty:
+       - Remove a cell from the queue.
+       - Check its four adjacent cells: up, left, down, right.
+       - If a neighbor is within bounds, contains 'O', and is unvisited, mark it visited and add it to the queue.
+    5. Traverse the entire board again:
+       - If a cell contains 'O' and is unvisited, change it to 'X'.
+       - Leave visited 'O' cells unchanged because they are connected to the boundary.
+    Why does this work?
+
+    An 'O' connected to a boundary 'O' cannot be surrounded, so it must remain unchanged. All other 'O' cells are surrounded by 'X' and must be converted.
+    */
+
+    //SC: O(M*N) + O(M*N) = O(MN)
+    //TC: O(M*N) + O(4MN) + O(MN) = O(MN)
+    public void solveBfs(char[][] board) {
+        int m = board.length;
+        int n = board[0].length;
+        int[][] visited = new int[m][n];
+        Queue<int[]> queue = new ArrayDeque<>();
+
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if((i==0 || i== m-1 || j == 0 || j== n-1) && board[i][j] == 'O'){
+                    queue.add(new int[]{i,j});
+                    visited[i][j] = 1;
+                }
+            }
+        }
+
+        int[] delRow = {-1,0,1,0};
+        int[] delCol = {0,-1,0,1};
+
+        while(!queue.isEmpty()){
+            int[] arr = queue.poll();
+            int row = arr[0];
+            int col = arr[1];
+            for(int i=0; i<4; i++){
+                int r = row + delRow[i];
+                int c = col + delCol[i];
+                if(r>=0 && r<m && c>=0 && c< n && board[r][c] == 'O' && visited[r][c] == 0){
+                    visited[r][c] = 1;
+                    queue.add(new int[]{r,c});
+
+                }
+            }
+        }
+
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(board[i][j] == 'O' && visited[i][j] == 0){
+                    board[i][j] = 'X';
+                }
+            }
+        }
+
     }
 }
