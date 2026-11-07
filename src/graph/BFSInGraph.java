@@ -41,23 +41,6 @@ public class BFSInGraph {
         }
         System.out.println(count);
     }
-
-    public static void rec(List<List<Integer>> nodesList, int[] visitedArray, Queue<Integer> bfsQueue, List<Integer> ansList){
-        if(bfsQueue.isEmpty()) return;
-
-        int ele = bfsQueue.poll();
-        if(visitedArray[ele] != 1) {
-            visitedArray[ele] = 1;
-            ansList.add(ele);
-            for (int i : nodesList.get(ele - 1)) {
-                if (visitedArray[i] == 0) {
-                    bfsQueue.add(i);
-                }
-            }
-        }
-        rec(nodesList, visitedArray, bfsQueue, ansList);
-
-    }
 }
 
 

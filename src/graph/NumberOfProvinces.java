@@ -1,5 +1,8 @@
 package graph;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 public class NumberOfProvinces {
     /*
         There are n cities. Some of them are connected, while some are not. If city a is connected directly with city b, and city b is connected directly with city c, then city a is connected indirectly with city c.
@@ -37,5 +40,30 @@ public class NumberOfProvinces {
                 dfs(isConnected, i, visitedArr);
             }
         }
+    }
+
+
+    public static int findCircleNumBfs(int[][] isConnected) {
+        int[] visited = new int[isConnected.length+1];
+        int count = 0;
+        Queue<Integer> queue = new ArrayDeque<>();
+        for(int i=0; i<isConnected.length; i++){
+            if(visited[i+1] == 0){
+                count++;
+                queue.add(i);
+                visited[i+1] = 1;
+                while(!queue.isEmpty()){
+                    int ele = queue.poll();
+                    for(int k=0; k<isConnected[0].length; k++){
+                        if(isConnected[ele][k] == 1 && visited[k+1] == 0){
+                            queue.add(k);
+                            visited[k+1] = 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        return count;
     }
 }

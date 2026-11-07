@@ -32,7 +32,8 @@ public class FindEventualSafeStates {
         The number of edges in the graph will be in the range [1, 4 * 104].
     * */
 
-    public List<Integer> eventualSafeNodes(int[][] graph) {
+    public static
+    List<Integer> eventualSafeNodes(int[][] graph) {
         int n = graph.length;
         int[] visited = new int[n];
         int[] pathVisited = new int[n];
@@ -46,7 +47,7 @@ public class FindEventualSafeStates {
         return list;
     }
 
-    public boolean dfs(int[] visited, int[] pathVisited, int[][] graph, int ele, List<Integer> list){
+    public static boolean dfs(int[] visited, int[] pathVisited, int[][] graph, int ele, List<Integer> list){
         visited[ele] = 1;
         pathVisited[ele] = 1;
         for(int i=0; i<graph[ele].length; i++){
