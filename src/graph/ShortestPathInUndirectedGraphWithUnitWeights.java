@@ -30,13 +30,12 @@ public class ShortestPathInUndirectedGraphWithUnitWeights {
             }
         }
 
+
         for(int i=0; i<v; i++){
             if(ans[i] == Integer.MAX_VALUE){
                 ans[i] = -1;
             }
         }
-
-
         return ans;
     }
 }
