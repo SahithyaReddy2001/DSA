@@ -1,6 +1,7 @@
 import graph.AlienDict;
 import graph.FindEventualSafeStates;
 import graph.PrintShortestPath;
+import graph.ShortestDistanceInBinaryMaze;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -50,7 +51,7 @@ public class Main {
 //                .map(subList -> subList.stream().mapToInt(Integer::intValue).toArray())
 //                .toArray(int[][]::new), 2, 1));
         //System.out.println(PrintShortestPath.shortestPathTest(5, new int[][]{{1,2,2},{2,5,5},{2,3,4},{1,4,1},{4,3,3},{3,5,1}}, 1,5));
-        System.out.println(PrintShortestPath.shortestPathTest(5, new int[][]{{1, 2, 2}, {2, 5, 5}, {2, 3, 4}, {1, 4, 1}, {4, 3, 3}, {3, 5, 1}}, 1,4));
+        System.out.println(ShortestDistanceInBinaryMaze.shortestPath(new int[][]{{1, 1, 1, 1}, {1, 1, 0, 1}, {1, 1, 1, 1}, {1, 1, 0, 0}, {1, 0, 0, 1}}, new int[]{0,1},new int[]{2,2}));
 
     }
 
