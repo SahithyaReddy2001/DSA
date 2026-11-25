@@ -1,7 +1,4 @@
-import graph.AlienDict;
-import graph.FindEventualSafeStates;
-import graph.PrintShortestPath;
-import graph.ShortestDistanceInBinaryMaze;
+import graph.*;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -29,7 +26,7 @@ public class Main {
 
 //        System.out.println(FindEventualSafeStates.eventualSafeNodes(list.stream()
 //                .map(subList -> subList.stream().mapToInt(Integer::intValue).toArray())
-//                .toArray(int[][]::new)));
+//                .toArray(int{}{}::new)));
 //
         ArrayList<ArrayList<ArrayList<Integer>>> adj = new ArrayList<>(List.of(
                 new ArrayList<>(List.of(
@@ -45,14 +42,7 @@ public class Main {
                         new ArrayList<>(List.of(1, 3))
                 ))
         ));
-//        //System.out.println(AlienDict.findOrderTest(new String[]{"baa", "abc", "abcd", "abca", "cab"}));
-
-//        System.out.println(shortestPath(4, list.stream()
-//                .map(subList -> subList.stream().mapToInt(Integer::intValue).toArray())
-//                .toArray(int[][]::new), 2, 1));
-        //System.out.println(PrintShortestPath.shortestPathTest(5, new int[][]{{1,2,2},{2,5,5},{2,3,4},{1,4,1},{4,3,3},{3,5,1}}, 1,5));
-        System.out.println(ShortestDistanceInBinaryMaze.shortestPath(new int[][]{{1, 1, 1, 1}, {1, 1, 0, 1}, {1, 1, 1, 1}, {1, 1, 0, 0}, {1, 0, 0, 1}}, new int[]{0,1},new int[]{2,2}));
-
+        System.out.println(KruskalsAlgorithm.kruskalsMST(4, new int[][] {{0, 1, 6}, {0, 2, 3}, {1, 3, 9}, {0, 3, 1}, {2, 3, 6}}));
     }
 
 
