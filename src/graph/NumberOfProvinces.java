@@ -1,7 +1,6 @@
 package graph;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.*;
 
 public class NumberOfProvinces {
     /*
@@ -66,4 +65,76 @@ public class NumberOfProvinces {
 
         return count;
     }
+
+
+
+
+
+    //################  Using Disjoint sets ############################
+
+    /*
+    * 1. Time Complexity (TC)
+        - O(N): Initialize parent and size arrays.
+        - O(N^2 * α(N)): Traverse the adjacency matrix and perform
+          Disjoint Set Union operations (Find + Union).
+        - O(N * α(N)): Count the number of ultimate parents.
+
+        Final TC: O(N) + O(N^2 * α(N)) + O(N * α(N))
+                  = O(N^2 * α(N))
+                  ≈ O(N^2)
+
+
+       2. Space Complexity (SC)
+        - O(N): Parent array.
+        - O(N): Size array.
+        - O(N): Recursive stack space for findUltimateParent
+          (worst case before path compression).
+
+        Final SC: O(N) + O(N) + O(N)
+          = O(N)
+    */
+    public static int findCircleNumDisjointSet(int[][] isConnected) {
+        int[] parent = new int[isConnected.length+1];
+        int[] size = new int[isConnected.length+1];
+        for(int i=1; i<parent.length; i++){
+            parent[i] = i;
+            size[i] = 1;
+        }
+
+        for(int i=0; i<isConnected.length; i++){
+            for(int j=i+1; j<isConnected[i].length; j++){
+                if(isConnected[i][j] == 1){
+                    int n1 = i+1;
+                    int n2 = j+1;
+
+                    int upn1 = findUltimateParent(n1, parent);
+                    int upn2 = findUltimateParent(n2, parent);
+
+                    if(upn1 == upn2) continue;
+
+                    if(size[upn1] > size[upn2]){
+                        size[upn1] += size[upn2];
+                        parent[upn2] = upn1;
+                    }else{
+                        size[upn2] += size[upn1];
+                        parent[upn1] = upn2;
+                    }
+                }
+            }
+        }
+
+        int count = 0;
+        for(int i=1; i<parent.length; i++){
+            if(i == parent[i]) count++;
+        }
+
+        return count;
+    }
+
+    public static int findUltimateParent(int n, int[] arr){
+        if(arr[n] == n) return n;
+        arr[n] = findUltimateParent(arr[n], arr);
+        return arr[n];
+    }
+
 }
